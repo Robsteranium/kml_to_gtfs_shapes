@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://earth.google.com/kml/2.1">
+	<Folder>
+		<Placemark>
+			<name>Looping Route</name>
+			<LineString>
+				<coordinates>
+					 0, 0
+					10, 0
+					10,10
+					20,10
+					20, 0
+					30, 0
+					30,20
+					20,20
+					20,10
+					10,10
+					10,20
+					 0,20
+					 0, 0
+			        </coordinates>
+			</LineString>
+		</Placemark>
+	</Folder>
+</kml>

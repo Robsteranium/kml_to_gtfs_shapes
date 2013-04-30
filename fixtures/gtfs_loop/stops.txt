@@ -1,0 +1,8 @@
+stop_id,stop_code,stop_name,stop_lat,stop_lon,stop_url
+1,1,One,5,2,
+2,2,Two,15,12,
+3,3,Three,25,2,
+4,4,Four,25,18,
+5,5,Five,15,8,
+6,6,Six,5,18,
+

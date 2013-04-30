@@ -1,0 +1,4 @@
+route_id,agency_id,route_short_name,route_long_name,route_type
+GMN:   3:C:,GMN,   3,PICCADILLY - SALFORD STATION MetroShuttle,3
+GMN:   2:C:,GMN,   2,SHUDEHILL - OXFORD RD MetroShuttle Circular,3
+GMN:   1:C:,GMN,   1,PICCADILLY - DEANSGATE MetroShuttle Circular,3

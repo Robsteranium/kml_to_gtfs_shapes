@@ -1,0 +1,6 @@
+<kml xmlns:xsd="http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd" xmlns:xmlns="http://www.opengis.net/kml/2.2/" version="1.0">
+  <Document>
+    <name>/home/robin/Code/tfgm/kml_to_gtfs_shapes/fixtures/loop.kml</name>
+    <open>1</open>
+  </Document>
+</kml>
