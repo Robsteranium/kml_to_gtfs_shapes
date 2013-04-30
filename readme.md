@@ -8,6 +8,8 @@ Associating kml coordinates to stops by euclidian distance is trivial. The reaso
 
 ![Looping Route/ Shape Example from Fixtures](/Rplot001.png)
 
+This algorithm resolves the stop to a point on the route by ignoring that part of the route that has already been covered.
+
 
 ## Requirements
 Naturally you'll need a GTFS directory and a KML file with the route polygons. You can find examples in the `fixtures` and `metroshuttle_example` directories. 
@@ -38,9 +40,7 @@ The `shape_dist_traveled` field used in `stop_times.txt` is also provided.
     converter.distance_traveled_by_stop
 
 
-## Batch Implementation
-
-The converter only works on one route at a time (at the moment at least). To use it to convert a whole transport network you'll need to have a script to loop through the routes and associate these to KML. It may also be necessary to distinguish certain stops if the one KML route is used to describe trips covering different sets of stops (as per stop_times).
+## Example
 
 An example has been included for the Manchester's Metroshuttle along with the GTFS and KML files needed to recreate this. You can run the script as follows
 
@@ -49,5 +49,19 @@ An example has been included for the Manchester's Metroshuttle along with the GT
 This will use the contents of the `metroshuttle_example/gtfs_original` directory and the `metroshuttle_example/kml/MetroshuttleRoutes.fixed.KML` (which fixes the reversed lat/lons from the original TFGM release) to produce `shapes.txt` and update `trips.txt` and `stop_times.txt` in the `metroshuttle_example/gtfs_update` directory.
 
 
-## Known Bugs
-The current implementation calculates distance traveled for every unique stop covered by the route by mapping from the route_id to trips, and then to stop times. This causes problems when a) the route starts and ends at the same stop (the distance traveled at the last stop is mistakenly set to 0) and b) the route covers several trips which use different sets of stops. The Metroshuttle example script ignores route 1A and 2 for the latter reason.
+## Next Steps - Implementation across Multiple Trips
+
+The converter currently makes the assumption that a route only involves one set of stops. In reality GTFS provides for multiple sets of stops for different trips (as defined in stop_times). The GTFS is currently simplified in a naive manner - the route is mapped to all unique stops across all trips on that route. These are arranged by sequence which means two different trips on the same route will overlap and confuse the converter.
+
+This problems mean that the Metroshuttle 2 route in the example cannot be parsed. The arrangement of stops in the different trips on this route move in opposite directions and the converter thinks it has covered the whole distance by the second stop.
+
+To resolve this problem the converter needs to be modified to generate shape_dist_traveled for each trip.
+
+The converter must also be modified to account for the fact that the last stop is often the same as the first stop (currently this means the distance traveled at the last stop is mistakenly set to 0).
+
+Parallel work is also ongoing into a conversion between arbitrary vehicle GPS locations and GTFS-RT. This hasn't been released yet.
+
+
+
+
+Copyright (c) 2012 Robin Gower. Released under Affero General Public License.
