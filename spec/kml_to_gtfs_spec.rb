@@ -5,8 +5,8 @@ describe KMLtoGTFS do
   describe "basic shape" do
     let!(:conv) do
       conv = KMLtoGTFS.new
-      conv.import_from_kml_file('fixtures/example.kml', 'Boring Route')
-      conv.import_from_gtfs_files('fixtures/gtfs_example', '1')
+      conv.import_from_kml_file('fixtures/basic.kml', 'Boring Route')
+      conv.import_from_gtfs_files('fixtures/gtfs_basic', '1')
       conv
     end
 
@@ -27,7 +27,7 @@ describe KMLtoGTFS do
     end
 
     it "should create shapes.txt" do
-      conv.csv_for_shapes(1).should eq open('fixtures/shapes.txt').read.chomp
+      conv.csv_for_shapes(1).should eq open('fixtures/gtfs_basic/shapes.txt').read.chomp
     end
 
   end
@@ -53,6 +53,23 @@ describe KMLtoGTFS do
 
     it "should calculate distance travelled for stop times" do
       conv.distance_traveled_by_stop.should eq [5, 25, 45, 75, 95, 115]
+    end
+  end
+
+  describe "multiple trips on route" do
+    let!(:conv) do
+      conv = KMLtoGTFS.new
+      conv.import_from_kml_file('fixtures/multiple.kml', 'MultiTrip Route')
+      conv.import_from_gtfs_files('fixtures/gtfs_multiple', '1')
+      conv
+    end
+
+    it "should only pick-up stops from trip 1" do
+      conv.stops.length.should eq 4
+    end
+
+    it "should pick-up the right stops from trip 1" do
+      conv.distance_traveled_by_stop.should eq [0, 20, 30, 50]
     end
 
   end

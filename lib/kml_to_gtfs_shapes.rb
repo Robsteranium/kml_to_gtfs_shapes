@@ -19,11 +19,9 @@ class KMLtoGTFS
     self.coordinates = coordinate_strings[1..-2].map{|cs| cs.lstrip.split(",")[0..1].map(&:to_f) }
   end
 
-  def import_from_gtfs_files(file_path, route_id)
-    trips      = CSV.read(file_path + "/trips.txt", :headers=> :first_row)
-    trip_ids   = trips.select{|trip| trip["route_id"]== route_id }.map{|trip| trip["trip_id"]}
+  def import_from_gtfs_files(file_path, trip_id)
     stop_times = CSV.read(file_path + "/stop_times.txt", :headers=> :first_row)
-    relevant_st= stop_times.select{|stop_time| trip_ids.include?( stop_time["trip_id"] ) }
+    relevant_st= stop_times.select{|stop_time| stop_time["trip_id"] == trip_id }
     uniq_st    = relevant_st.uniq {|stop_time| stop_time["stop_id"] }
     ordered_st = uniq_st.sort_by{|stop_time| stop_time["stop_sequence"].to_i }
     stop_ids   = ordered_st.map{|stop_time| stop_time["stop_id"]}

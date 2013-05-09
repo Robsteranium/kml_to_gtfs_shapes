@@ -2,3 +2,4 @@ trip_id,arrival_time,departure_time,stop_id,stop_sequence,pickup_type,drop_off_t
 1,09:00,09:00,1,1,,
 1,09:10,09:10,2,2,,
 1,09:20,09:20,3,3,,
+
