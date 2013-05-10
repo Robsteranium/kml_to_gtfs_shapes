@@ -74,6 +74,24 @@ describe KMLtoGTFS do
 
   end
 
+  describe "circular route (starts and ends at same stop)" do
+    let!(:conv) do
+      conv = KMLtoGTFS.new
+      conv.import_from_kml_file('fixtures/multiple.kml', 'MultiTrip Route')
+      conv.import_from_gtfs_files('fixtures/gtfs_multiple', '2')
+      conv
+    end
+
+    it "should realise that stops are different" do
+      conv.stops.length.should eq 3
+    end
+
+    it "should not set the final distance at 0" do
+      conv.distance_traveled_by_stop.should eq [0, 15, 60]
+    end
+
+  end
+
   pending "validate inputs - stop sequence"
   pending "validate results - dist increases with sequence"
   pending "cope with routes that start and stop in the same point"

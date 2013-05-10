@@ -22,8 +22,7 @@ class KMLtoGTFS
   def import_from_gtfs_files(file_path, trip_id)
     stop_times = CSV.read(file_path + "/stop_times.txt", :headers=> :first_row)
     relevant_st= stop_times.select{|stop_time| stop_time["trip_id"] == trip_id }
-    uniq_st    = relevant_st.uniq {|stop_time| stop_time["stop_id"] }
-    ordered_st = uniq_st.sort_by{|stop_time| stop_time["stop_sequence"].to_i }
+    ordered_st = relevant_st.sort_by{|stop_time| stop_time["stop_sequence"].to_i }
     stop_ids   = ordered_st.map{|stop_time| stop_time["stop_id"]}
     #stop_ids   = stop_times.select{|stop_time| trip_ids.include?( stop_time["trip_id"] ) }.map{|stop_time| stop_time["stop_id"]}.uniq
     stops      = CSV.read(file_path + "/stops.txt", :headers=> :first_row)
